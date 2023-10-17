@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PartyLoot.Data;
 namespace PartyLoot
 {
     public class Program
@@ -5,6 +8,8 @@ namespace PartyLoot
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<PartyLootContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("PartyLootContext") ?? throw new InvalidOperationException("Connection string 'PartyLootContext' not found.")));
 
             // Add services to the container.
 
